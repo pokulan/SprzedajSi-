@@ -12,20 +12,39 @@ body{
 	background-position: center;
 	background-color: #fcfaf4;
 	height: 500px;
+	width: 400px;
 }
 
 #action_bar{
 	background-color: #9cd3ed; 
 	text-align: center;
 	position: relative;
-	width: 80%;
-	top: 40%;
+	width: 400px;
 	height: auto;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 1%;
+}
+#box{
+	position: relative;
+	width: 400px;
+	margin-top: 10%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
+#loginReg{
+	display: flex;
+	justify-content: center;
+}
+
+.logButt{
+	background-color: #6e9cb2;
+	width: 50%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px; 
+}
 
 input, label{
 	display: block;
