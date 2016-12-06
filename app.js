@@ -7,10 +7,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-/*
-app.get('/', function (req, res) {
+
+app.get('/test', function (req, res) {
   res.send('Witaj na stronie NodeJS Express!');
-}); */
+});
 
 app.use('/', express.static('home_page'));
 
