@@ -1,0 +1,71 @@
+body{
+	background-color: #fcfaf4 !important;
+}
+
+#top_bar{
+	padding: 10px;
+	padding-top: 10px;
+}
+
+#baner_bar{
+	background-size: cover;
+	background-position: center;
+	background-color: #fcfaf4;
+	height: 500px;
+}
+
+#action_bar{
+	background-color: #9cd3ed; 
+	text-align: center;
+	position: relative;
+	width: 80%;
+	top: 40%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+}
+
+
+input, label{
+	display: block;
+	color: #5e6060;
+}
+input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    background-color: #fcfaf4;
+    color: #5e6060;
+}
+
+::-webkit-input-placeholder {
+   color: red;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: red;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: red;  
+}
+
+:-ms-input-placeholder {  
+   color: red;  
+}
+
+button{
+	background-color: #ffffff;	
+}
+button:hover{
+	background-color: #ededed;	
+}
+select{
+	color: #696969;
+	width: 90%;
+    box-sizing: border-box;
+    border: none;
+    background-color: #ffffff;
+    color: white;
+}
