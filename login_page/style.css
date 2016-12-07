@@ -1,24 +1,26 @@
 body{
 	background-color: #fcfaf4 !important;
-	background-image: URL("BG.jpg");
+	//background-image: URL("BG.jpg");
+	font-family: 'Martel', serif !important;
 }
 
 #top_bar{
 	padding: 10px;
 	padding-top: 10px;
+	background-color: #e0d8c0;
 }
 
 #baner_bar{
 	background-size: cover;
 	background-position: center;
-	background-color: #fcfaf4;
+	background-color: #e0d8c0;
 	height: 500px;
 	width: 400px;
 
 }
 
 #action_bar{
-	background-color: rgba(156, 211, 237, 0.7);
+	background-color: #e0d8c0;
 	text-align: center;
 	position: relative;
 	width: 400px;
@@ -26,25 +28,55 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 }
 #box{
-	background-color: #9cd3ed;
+	background-color: #e0d8c0;
+	position: relative;
+	width: auto;
+	height: auto;
+}
+#info{
+	background-color: #e0d8c0;
 	position: relative;
 	width: 400px;
-	margin-top: 10%;
 	height: auto;
-	margin-left: auto;
-	margin-right: auto;
+	padding: 8px;
 }
+#tak{
+	display: -webkit-box;
+    display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
 
+}
 #loginReg{
 	display: flex;
 	justify-content: center;
 }
+#base{
+  margin-top: 10%;
+  list-style: none;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: center;
+}
 
 .logButt{
-	background-color: rgba(110, 156, 178, 0.7);
+	background-color: #c4bba1;
 	width: 50%;
 	text-align: center;
 	height: 40px;
@@ -52,7 +84,7 @@ body{
 	cursor: pointer;
 }
 .logButt:hover{
-	background-color: rgba(110, 156, 178, 1);
+	background-color: #b9c4a1;
 }
 
 .wsk{
@@ -67,7 +99,7 @@ body{
 	opacity: 0;
 }
 #wskaznik{
-		background-color: #fcfaf4;
+		background-color: #cdd6ba;
 		display: flex;
 		justify-content: center;
 }
@@ -82,6 +114,7 @@ input[type=text] {
     border: none;
     background-color: #fcfaf4;
     color: #5e6060;
+	font-family: 'Martel', serif;
 }
 
 ::-webkit-input-placeholder {
@@ -113,4 +146,8 @@ select{
     border: none;
     background-color: #ffffff;
     color: white;
+}
+#regButt{
+	
+	
 }
