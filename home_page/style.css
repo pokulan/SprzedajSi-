@@ -1,16 +1,18 @@
 body{
-	background-color: #000000;
+	background-color: #fcfaf4 !important;
 }
-
-#top_bar svg path {
-    fill: #ff6a00;
-}
-
 #top_bar{
 	padding: 10px;
 	padding-top: 10px;
+	overflow:hidden; /* nie ruszać bo wszystko idzie w pizdtiet */
 }
-
+#login{
+	float: right;
+	background-color: #e3edec;
+}
+#login:hover{
+	background-color: #cbd8d7;
+}
 #baner_bar{
 	background-image: url("baner.jpg");
 	background-size: cover;
