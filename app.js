@@ -13,6 +13,7 @@ app.get('/test', function (req, res) {
 });
 
 app.use('/', express.static('home_page'));
+app.use('/login', express.static('login_page'));
 
 
 
