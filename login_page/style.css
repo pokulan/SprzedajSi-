@@ -1,5 +1,6 @@
 body{
 	background-color: #fcfaf4 !important;
+	background-image: URL("BG.jpg");
 }
 
 #top_bar{
@@ -12,20 +13,64 @@ body{
 	background-position: center;
 	background-color: #fcfaf4;
 	height: 500px;
+	width: 400px;
+
 }
 
 #action_bar{
-	background-color: #9cd3ed; 
+	background-color: rgba(156, 211, 237, 0.7);
 	text-align: center;
 	position: relative;
-	width: 80%;
-	top: 40%;
+	width: 400px;
 	height: auto;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 1%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#box{
+	background-color: #9cd3ed;
+	position: relative;
+	width: 400px;
+	margin-top: 10%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
+#loginReg{
+	display: flex;
+	justify-content: center;
+}
+
+.logButt{
+	background-color: rgba(110, 156, 178, 0.7);
+	width: 50%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	cursor: pointer;
+}
+.logButt:hover{
+	background-color: rgba(110, 156, 178, 1);
+}
+
+.wsk{
+	width: 50%;
+	height: 6px;
+	background-color: #88ceae
+}
+#wskLog{
+	opacity: 1;
+}
+#wskReg{
+	opacity: 0;
+}
+#wskaznik{
+		background-color: #fcfaf4;
+		display: flex;
+		justify-content: center;
+}
 
 input, label{
 	display: block;
@@ -44,22 +89,22 @@ input[type=text] {
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   color: red;  
+   color: red;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: red;  
+   color: red;
 }
 
-:-ms-input-placeholder {  
-   color: red;  
+:-ms-input-placeholder {
+   color: red;
 }
 
 button{
-	background-color: #ffffff;	
+	background-color: #ffffff;
 }
 button:hover{
-	background-color: #ededed;	
+	background-color: #ededed;
 }
 select{
 	color: #696969;
