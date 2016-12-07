@@ -9,9 +9,12 @@ body{
 #login{
 	float: right;
 	background-color: #e3edec;
+	padding: 10px;
+	border-radius: 15px 50px 30px;
 }
 #login:hover{
 	background-color: #cbd8d7;
+	cursor: pointer;
 }
 #baner_bar{
 	background-image: url("baner.jpg");
@@ -22,7 +25,7 @@ body{
 }
 
 #action_bar{
-	background-color: rgba(255, 255, 255, 0.5); 
+	background-color: rgba(255, 255, 255, 0.5);
 	text-align: center;
 	position: relative;
 	width: 80%;
@@ -51,10 +54,10 @@ input[type=text] {
     color: #696969;
 }
 button{
-	background-color: #ffffff;	
+	background-color: #ffffff;
 }
 button:hover{
-	background-color: #ededed;	
+	background-color: #ededed;
 }
 select{
 	color: #696969;
