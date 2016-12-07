@@ -11,7 +11,7 @@ body{
 	float: right;
 	background-color: #e3edec;
 	padding: 10px;
-	border-radius: 15px 50px 30px;
+	border-radius: 50px;
 }
 #login:hover{
 	background-color: #cbd8d7;
