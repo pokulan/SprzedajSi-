@@ -1,8 +1,12 @@
-var bodyParser = require('body-parser');
-var express = require('express');
+var bodyParser  = require('body-parser');
+var express     = require('express');
+var ejs         = require('ejs');
+var fs          = require('fs');
 var app = express();
 
-var mysql     =    require('mysql');
+app.set('view engine', 'ejs');
+
+var mysql       = require('mysql');
 
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
@@ -27,30 +31,35 @@ function callAjax(url, callback){
 }
 
 function handle_database(req,res,what) {
-    var alike = req.query.q;
+
     pool.getConnection(function(err,connection){
         if (err) {
-          res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
+          return json({"code" : 100, "status" : "Error in connection database"});
         }
 
         console.log('connected as id ' + connection.threadId);
         var dBquery = '';
-        if (what == 'ogloszenie')  dBquery = "select * from ogloszenie";
+        if (what == 'ogloszenielike') {
+          var alike = req.query.q;
+          dBquery = "select * from ogloszenie";
+          dBquery += " where lower(name) like lower('%" + alike + "%')";
+        }
         else if (what == 'kategoria') dBquery = "select * from kategoria";
-
-        dBquery += " where lower(name) like lower('%" + alike + "%')";
+        else if (what == 'ogloszeniekat') {
+          var category = req.query.c;
+          dBquery = "select * from ogloszenie";
+          dBquery += " where id_kat = " + category;
+        }
 
         connection.query(dBquery, function(err,rows){
             connection.release();
             if(!err) {
-                res.json(rows);
+                return JSON.stringify(json(rows));
             }
         });
 
         connection.on('error', function(err) {
-              res.json({"code" : 100, "status" : "Error in connection database"});
-              return;
+              return json({"code" : 100, "status" : "Error in connection database"});
         });
   });
 }
@@ -61,17 +70,26 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-app.get('/test', function (req, res) {
-  res.send('Witaj na stronie NodeJS Express!');
-});
-
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
 
-app.get('/search', function(req,res) {
-    handle_database(req,res,'ogloszenie')
+app.get('/searchapi', function(req,res) {
+    handle_database(req,res,'ogloszenielike')
 });
 
+app.get('/catapi', function(req,res) {
+    handle_database(req,res,'ogloszeniekat')
+});
+
+//app.get('/searchpage', express.static('search_page'));
+
+app.get('/search', function(req,res) {
+  var entries;
+  entries = handle_database(req, 'ogloszenielike');
+  if (req.query.c != "") entries = handle_database(req, 'ogloszeniekat');
+  console.log(entries);
+  res.render('search_page', {entries: entries})
+});
 
 
 var server = app.listen(3000, function () {
