@@ -71,8 +71,10 @@
 
 		</div>
 	</div>
-	<div id='entries'>
-		<%= entries %>
+	<div>
+		<% entriesEJ.forEach(function(entry) { %>
+			<div><%= entry.id %><%= entry.descr %></div>
+		<% }); %>
 	</div>
 
  </div>
