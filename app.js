@@ -11,8 +11,8 @@ var mysql       = require('mysql');
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'uczen',
-    password : 'qwerty',
+    user     : 'root',
+    password : 'root',
     database : 'OGLOSZENIOWA',
     debug    :  false
 });
@@ -27,7 +27,6 @@ app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
 
 app.get('/search', function(req,res) {
-  var obj = [];
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
     var dBquery="";
@@ -40,21 +39,19 @@ app.get('/search', function(req,res) {
       if (err) {
         throw err;
       } else {
-        obj += {entriesEJ: rows};
-        res.render('search_page', obj)
-      }
-    });
-    dBquery = "select * from kategoria"
-    connection.query(dBquery, function(err, rows, fields) {
-      if (err) {
-        throw err;
-      } else {
-        obj += {categories: rows};
+        dBquery = "select * from kategoria"
+        connection.query(dBquery, function(err, rows2, fields) {
+          if (err) {
+            throw err;
+          } else {
+            //console.log(rows);
+            //console.log(rows2);
+            res.render('search_page', {entriesEJ: rows, categories: rows2});
+          }
+        });
       }
     });
   });
-  console.log(obj);
-
 });
 
 
