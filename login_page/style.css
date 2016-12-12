@@ -38,7 +38,7 @@ body{
 	position: relative;
 	width: auto;
 	height: auto;
-	
+
 }
 #info{
 	background-color: #e0d8c0;
@@ -69,14 +69,14 @@ body{
   width: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 21.5%;
-  
+  margin-bottom: 100px;
+
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  
+
   -webkit-flex-flow: row wrap;
   justify-content: center;
 }
@@ -154,12 +154,12 @@ select{
     color: white;
 }
 #container{
-	height: calc(100vh - 25px);
-	
+	height: calc(100vh - 50px);
+
 }
 #footer{
-	//position: absolute;
-	//bottom: 0vh;
+	position: fixed;
+	bottom: 0px;
 	background-color: #e0d8c0;
 	text-align: center;
 	width: 100%;
