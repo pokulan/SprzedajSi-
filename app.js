@@ -27,19 +27,34 @@ app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
 
 app.get('/search', function(req,res) {
+  var obj = [];
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-    //var alike = req.query.q;
-    var dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";;
+    var dBquery="";
+    if (req.query.q)
+      dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
+    else
+      dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
+    console.log(dBquery);
     connection.query(dBquery, function(err, rows, fields) {
       if (err) {
         throw err;
       } else {
-        obj = {entriesEJ: rows};
+        obj += {entriesEJ: rows};
         res.render('search_page', obj)
       }
     });
+    dBquery = "select * from kategoria"
+    connection.query(dBquery, function(err, rows, fields) {
+      if (err) {
+        throw err;
+      } else {
+        obj += {categories: rows};
+      }
+    });
   });
+  console.log(obj);
+
 });
 
 
