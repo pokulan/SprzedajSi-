@@ -22,6 +22,18 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+function getCategories(callback) {
+  pool.getConnection(function(err,connection) {
+    dBquery = "select * from kategoria"
+    connection.query(dBquery, function(err, rows2, fields) {
+      if (err) {
+        throw err;
+      } else {
+        return callback(rows2);
+      }
+    });
+  });
+}//tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
@@ -39,15 +51,8 @@ app.get('/search', function(req,res) {
       if (err) {
         throw err;
       } else {
-        dBquery = "select * from kategoria"
-        connection.query(dBquery, function(err, rows2, fields) {
-          if (err) {
-            throw err;
-          } else {
-            //console.log(rows);
-            //console.log(rows2);
-            res.render('search_page', {entriesEJ: rows, categories: rows2});
-          }
+        getCategories(function(res0){
+          res.render('search_page', {entriesEJ: rows, categories: res0}); //jak dojdzie więcej parametrów to zagnieździć w pizdu
         });
       }
     });
