@@ -23,6 +23,18 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+function getCategories(callback) {
+  pool.getConnection(function(err,connection) {
+    dBquery = "select * from kategoria"
+    connection.query(dBquery, function(err, rows2, fields) {
+      if (err) {
+        throw err;
+      } else {
+        return callback(rows2);
+      }
+    });
+  });
+}//tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
@@ -53,14 +65,19 @@ app.post('/RegIn', function(req, res){
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-    //var alike = req.query.q;
-    var dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";;
+    var dBquery="";
+    if (req.query.q)
+      dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
+    else
+      dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
+    console.log(dBquery);
     connection.query(dBquery, function(err, rows, fields) {
       if (err) {
         throw err;
       } else {
-        obj = {entriesEJ: rows};
-        res.render('search_page', obj)
+        getCategories(function(res0){
+          res.render('search_page', {entriesEJ: rows, categories: res0}); //jak dojdzie więcej parametrów to zagnieździć w pizdu
+        });
       }
     });
   });
