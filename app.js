@@ -11,8 +11,8 @@ var mysql       = require('mysql');
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'uczen',
-    password : 'qwerty',
+    user     : 'root',
+    password : 'root',
     database : 'OGLOSZENIOWA',
     debug    :  false
 });
@@ -34,7 +34,7 @@ function getCategories(callback) {
       }
     });
   });
-}//tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
+}//TODO: tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
@@ -63,20 +63,21 @@ app.post('/RegIn', function(req, res){
 })
 
 app.get('/search', function(req,res) {
-  pool.getConnection(function(err,connection) {
-    console.log('connected as id ' + connection.threadId);
+  pool.getConnection(function(err,connection) {//TODO: sprawdzic czy na jednym pool.getConnection da radę wykonać kilka poleceń
+    //console.log('connected as id ' + connection.threadId);
     var dBquery="";
     if (req.query.q)
       dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
-    else
+    else if (req.query.cat)
       dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
-    console.log(dBquery);
     connection.query(dBquery, function(err, rows, fields) {
       if (err) {
-        throw err;
+        getCategories(function(res0){
+          res.render('pages/search', {entriesEJ: [], categories: res0}); //TODO: wyjebać getCategories na początek renderowania strony
+        });
       } else {
         getCategories(function(res0){
-          res.render('search_page', {entriesEJ: rows, categories: res0}); //jak dojdzie więcej parametrów to zagnieździć w pizdu
+          res.render('pages/search', {entriesEJ: rows, categories: res0}); //TODO: jak dojdzie więcej parametrów to zagnieździć w pizdu
         });
       }
     });
