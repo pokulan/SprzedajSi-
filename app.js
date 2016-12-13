@@ -17,26 +17,67 @@ var pool      =    mysql.createPool({
     debug    :  false
 });
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+function getCategories(callback) {
+  pool.getConnection(function(err,connection) {
+    dBquery = "select * from kategoria"
+    connection.query(dBquery, function(err, rows2, fields) {
+      if (err) {
+        throw err;
+      } else {
+        return callback(rows2);
+      }
+    });
+  });
+}//tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
 
+
+app.post('/logIn', function(req, res){
+  var logInM = req.body.mail;
+  var logInH = req.body.haslo;
+  res.send("e-mail: " + logInM + " hasło: "+ logInH);
+  //express.static('home_page')
+})
+
+app.post('/RegIn', function(req, res){
+  var regInM = req.body.mail;
+  var regInI = req.body.imie;
+  var regInN = req.body.nazwisko;
+  var regInNick = req.body.nick;
+  var regInH1 = req.body.haslo;
+  var regInH2 = req.body.hasloAgain;
+  pool.getConnection(function(err,connection) {
+    console.log('connected as id ' + connection.threadId);
+    
+  });
+  res.send("e-mail: " + regInM + " imie: "+ regInI);
+  //express.static('home_page')
+})
+
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-    //var alike = req.query.q;
-    var dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";;
+    var dBquery="";
+    if (req.query.q)
+      dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
+    else
+      dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
+    console.log(dBquery);
     connection.query(dBquery, function(err, rows, fields) {
       if (err) {
         throw err;
       } else {
-        obj = {entriesEJ: rows};
-        res.render('search_page', obj)
+        getCategories(function(res0){
+          res.render('search_page', {entriesEJ: rows, categories: res0}); //jak dojdzie więcej parametrów to zagnieździć w pizdu
+        });
       }
     });
   });
