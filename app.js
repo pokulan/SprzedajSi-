@@ -11,8 +11,8 @@ var mysql       = require('mysql');
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'root',
-    password : 'root',
+    user     : 'uczen',
+    password : 'qwerty',
     database : 'OGLOSZENIOWA',
     debug    :  false
 });
@@ -56,7 +56,7 @@ app.post('/RegIn', function(req, res){
   var regInH2 = req.body.hasloAgain;
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-    
+
   });
   res.send("e-mail: " + regInM + " imie: "+ regInI);
   //express.static('home_page')
