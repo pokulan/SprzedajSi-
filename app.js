@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-function getCategories(callback) {
-  pool.getConnection(function(err,connection) {
+function getCategories(connection,callback) {
+  //pool.getConnection(function(err,connection) {
     dBquery = "select * from kategoria"
     connection.query(dBquery, function(err, rows2, fields) {
       if (err) {
@@ -33,7 +33,7 @@ function getCategories(callback) {
         return callback(rows2);
       }
     });
-  });
+  //});
 }//TODO: tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/', express.static('home_page'));
@@ -63,23 +63,23 @@ app.post('/RegIn', function(req, res){
 })
 
 app.get('/search', function(req,res) {
-  pool.getConnection(function(err,connection) {//TODO: sprawdzic czy na jednym pool.getConnection da radę wykonać kilka poleceń
-    //console.log('connected as id ' + connection.threadId);
-    var dBquery="";
-    if (req.query.q)
-      dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
-    else if (req.query.cat)
-      dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
-    connection.query(dBquery, function(err, rows, fields) {
-      if (err) {
-        getCategories(function(res0){
-          res.render('pages/search', {entriesEJ: [], categories: res0}); //TODO: wyjebać getCategories na początek renderowania strony
-        });
-      } else {
-        getCategories(function(res0){
+  pool.getConnection(function(err,connection) {
+    console.log('connected as id ' + connection.threadId);
+    getCategories(connection,function(res0){
+      var dBquery="";
+      if (req.query.q)
+        dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
+      else if (req.query.cat)
+        dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
+      connection.query(dBquery, function(err, rows, fields) {
+        if (err) {
+          console.log('sql error (empty query or something)');
+          res.render('pages/search', {entriesEJ: [], categories: res0});
+        } else {
           res.render('pages/search', {entriesEJ: rows, categories: res0}); //TODO: jak dojdzie więcej parametrów to zagnieździć w pizdu
-        });
-      }
+        }
+        connection.release(); //najważniejsza linia w całym kodzie
+      });
     });
   });
 });
