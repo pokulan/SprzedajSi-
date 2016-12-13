@@ -4,12 +4,12 @@ function trig(x){
     $("#wskLog").css({ opacity: 1 });
     $("#wskReg").css({ opacity: 0 });
 
-    document.getElementById("action_bar").innerHTML = "<form>"
+    document.getElementById("action_bar").innerHTML = "<form action='/logIn' method='POST'>"
       + '<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="text" value="" class="form-control" id="mail" placeholder="E-mail">'
+      + '<input type="text" value="" class="form-control" name="mail" placeholder="E-mail">'
       + '</div>'
       + '<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="password" value="" class="form-control" id="haslo" placeholder="Hasło">'
+      + '<input type="password" value="" class="form-control" name="haslo" placeholder="Hasło">'
       + '</div>'
       + '<button class="btn" style="margin-top: 1%; margin-bottom: 10px;">Zaloguj się</button>'
       + '</form>';
@@ -19,24 +19,24 @@ function trig(x){
     $("#wskLog").css("opacity", "0");
     $("#wskReg").css("opacity", "1");
 
-    document.getElementById("action_bar").innerHTML = "<form>"
+    document.getElementById("action_bar").innerHTML = "<form action='/RegIn' method='POST'>"
       + '<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="text" value="" class="form-control" id="mail" placeholder="E-mail">'
+      + '<input type="text" value="" class="form-control" id="mail" name="mail" placeholder="E-mail">'
       + '</div>'
 	  + '<div class="control-group col-xs-6 col-md-6" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="text" value="" class="form-control" id="imie" placeholder="Imię">'
+      + '<input type="text" value="" class="form-control" id="imie" name="imie" placeholder="Imię">'
       + '</div>'
 	  + '<div class="control-group col-xs-6 col-md-6" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="text" value="" class="form-control" id="nazwisko" placeholder="Nazwisko">'
+      + '<input type="text" value="" class="form-control" id="nazwisko" name="nazwisko" placeholder="Nazwisko">'
       + '</div>'
       + '<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 22px;">'
-      + '<input type="text" value="" class="form-control" id="nick" placeholder="Nick">'
+      + '<input type="text" value="" class="form-control" id="nick" name="nick" placeholder="Nick">'
       + '</div>'
       + '<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="password" value="" class="form-control" id="haslo" placeholder="Hasło">'
-      + '</div>'    
+      + '<input type="password" value="" class="form-control" id="haslo" name="haslo" placeholder="Hasło">'
+      + '</div>'
       + '<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">'
-      + '<input type="password" value="" class="form-control" id="hasloAgain" placeholder="Powtórz hasło">'
+      + '<input type="password" value="" class="form-control" id="hasloAgain" name="hasloAgain" placeholder="Powtórz hasło">'
       + '</div>'
       + '<button class="btn" disabled="false" id="regButt" onmouseover="checkData()" style="margin-top: 1%; margin-bottom: 10px;">Zarejestruj się</button>'
 	  + '<div id="wrongFormula" style="color: #db8181; "></div>'
@@ -75,9 +75,9 @@ function checkData(){
 		document.getElementById("wrongPass").innerHTML = "Hasła nie są zgodne!";
 		document.getElementById("regButt").disabled = true;
 	 }
-	else{ 
+	else{
 		document.getElementById("wrongPass").innerHTML = "";
-		
+
 	}
 	if(!wrong && !wrongPass) document.getElementById("regButt").disabled = false;
 }

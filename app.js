@@ -17,6 +17,7 @@ var pool      =    mysql.createPool({
     debug    :  false
 });
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -37,6 +38,29 @@ function getCategories(callback) {
 
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
+
+
+app.post('/logIn', function(req, res){
+  var logInM = req.body.mail;
+  var logInH = req.body.haslo;
+  res.send("e-mail: " + logInM + " hasło: "+ logInH);
+  //express.static('home_page')
+})
+
+app.post('/RegIn', function(req, res){
+  var regInM = req.body.mail;
+  var regInI = req.body.imie;
+  var regInN = req.body.nazwisko;
+  var regInNick = req.body.nick;
+  var regInH1 = req.body.haslo;
+  var regInH2 = req.body.hasloAgain;
+  pool.getConnection(function(err,connection) {
+    console.log('connected as id ' + connection.threadId);
+    
+  });
+  res.send("e-mail: " + regInM + " imie: "+ regInI);
+  //express.static('home_page')
+})
 
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
