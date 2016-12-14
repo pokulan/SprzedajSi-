@@ -36,7 +36,17 @@ function getCategories(connection,callback) {
   //});
 }//TODO: tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
-app.use('/', express.static('home_page'));
+app.use('/rsrc', express.static('rsrc'));
+
+app.use('/', function(req,res) {
+  pool.getConnection(function(err,connection) {
+    getCategories(connection, function(res0) {
+      res.render('pages/main', {categories: res0});
+      connection.release();
+    })
+  })
+});
+
 app.use('/login', express.static('login_page'));
 
 
@@ -78,7 +88,6 @@ app.post('/RegIn', function(req, res){
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-
     getCategories(connection,function(res0){
       var dBquery="";
       if (req.query.q)
@@ -94,7 +103,6 @@ app.get('/search', function(req,res) {
         }
         connection.release(); //najważniejsza linia w całym kodzie
       });
-
     });
   });
 });
