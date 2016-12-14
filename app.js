@@ -24,27 +24,25 @@ app.use(bodyParser.urlencoded({
 }));
 
 function getCategories(connection,callback) {
-  //pool.getConnection(function(err,connection) {
-    dBquery = "select * from kategoria"
-    connection.query(dBquery, function(err, rows2, fields) {
-      if (err) {
-        throw err;
-      } else {
-        return callback(rows2);
-      }
-    });
-  //});
+  dBquery = "select * from kategoria"
+  connection.query(dBquery, function(err, rows2, fields) {
+    if (err) {
+      throw err;
+    } else {
+      return callback(rows2);
+    }
+  });
 }//TODO: tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/rsrc', express.static('rsrc'));
 
-app.use('/', function(req,res) {
+app.get('/', function(req,res) {
   pool.getConnection(function(err,connection) {
     getCategories(connection, function(res0) {
       res.render('pages/main', {categories: res0});
       connection.release();
-    })
-  })
+    });
+  });
 });
 
 app.use('/login', express.static('login_page'));

@@ -3,23 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Sprzedaj Się - logowanie</title>
-	<link rel="shortcut icon" href="ico.ico" type="image/x-icon" />
-
-	<meta name="viewport" content="width=device-width, initial-scale=1">
- 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Martel" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
-
-	<link rel="stylesheet" href="style.css">
-	<script src="script.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
-
+  <% include ../elements/includes %>
 </head>
 <body>
 <body>
@@ -42,7 +26,7 @@
 
 			</div>
 			<div id="action_bar">
-					<form action="/logIn" method="POST">
+				<form action="/logIn" method="POST">
 					<div class="control-group col-xs-12 col-md-12" style="padding-left: 20px; padding-right: 20px; margin-bottom: 8px;">
 					<input type="text" value='' class="form-control" name="mail" placeholder="E-mail">
 					</div>
@@ -61,13 +45,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer">2016</div>
+	<% include ../elements/footer %>
 </div>
 
 
 
 	<script>
 		setInterval(checkData, 200);
+	  //TODO: ZAMIENIC NA ONCHANGE()
 	</script>
 </body>
 </html>
