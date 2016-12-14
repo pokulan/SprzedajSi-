@@ -1,13 +1,13 @@
 <div id="baner_bar" style='margin-top:0 !important;'>
 
   <div id="action_bar">
-    <form>
+    <form action="/search" method="get">
         <div class="control-group col-xs-12 col-md-5" style="padding-bottom: 1%">
-          <input type="text" value='' class="form-control" id="name" placeholder="Szukaj...">
+          <input type="text" value='' class="form-control" name="q" placeholder="Szukaj...">
         </div>
         <div class="control-group col-xs-12 col-md-3" style="padding-bottom: 1%">
-          <select id="local" class="selectpicker" data-width="100%">
-            <option>Lokalizacja</option>
+          <select name="local" class="selectpicker" data-width="100%">
+            <option value="" title="lokalizacja" style="color:gray">Wszędzie</option>
             <option value="1">Dolnośląskie</option>
             <option value="2">Kujawsko-Pomorskie</option>
             <option value="3">Lubelskie</option>
@@ -28,17 +28,14 @@
 
         </div>
         <div class="form-group col-xs-12 col-md-3" style="padding-bottom: 1%">
-          <select id="category" class="selectpicker" data-width="100%">
+          <select name="cat" class="selectpicker" data-width="100%">
             <% categories.forEach(function(category) { %>
         			<option><%= category.name %></option>
         		<% }); %>
           </select>
 
         </div>
-        <button class="btn">Szukaj!</button>
+        <input type="submit" value="Szukaj!" class="btn"></input>
       </form>
-    <span></span>
-
-
   </div>
 </div>
