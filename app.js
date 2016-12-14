@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-function getCategories(callback) {
-  pool.getConnection(function(err,connection) {
+function getCategories(connection,callback) {
+  //pool.getConnection(function(err,connection) {
     dBquery = "select * from kategoria"
     connection.query(dBquery, function(err, rows2, fields) {
       if (err) {
@@ -33,8 +33,8 @@ function getCategories(callback) {
         return callback(rows2);
       }
     });
-  });
-}//tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
+  //});
+}//TODO: tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
 app.use('/', express.static('home_page'));
 app.use('/login', express.static('login_page'));
@@ -55,6 +55,7 @@ app.post('/RegIn', function(req, res){
   var regInH1 = req.body.haslo;
   var regInH2 = req.body.hasloAgain;
   pool.getConnection(function(err,connection) {
+    //console.log('connected as id ' + connection.threadId);
     console.log('connected as id '+ connection.threadId);
     var dBquery = "INSERT INTO uzytkownicy VALUES("
                 + regInM + ","
@@ -68,6 +69,7 @@ app.post('/RegIn', function(req, res){
                 +")";
     connection.query(dBquery);
 
+
   });
   res.send("e-mail: " + regInM + " imie: "+ regInI);
   //express.static('home_page')
@@ -76,20 +78,23 @@ app.post('/RegIn', function(req, res){
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-    var dBquery="";
-    if (req.query.q)
-      dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
-    else
-      dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
-    //console.log(dBquery);
-    connection.query(dBquery, function(err, rows, fields) {
-      if (err) {
-        throw err;
-      } else {
-        getCategories(function(res0){
-          res.render('search_page', {entriesEJ: rows, categories: res0}); //jak dojdzie więcej parametrów to zagnieździć w pizdu
-        });
-      }
+
+    getCategories(connection,function(res0){
+      var dBquery="";
+      if (req.query.q)
+        dBquery = "select * from ogloszenie where lower(name) like lower('%" + req.query.q + "%')";
+      else if (req.query.cat)
+        dBquery = "select * from ogloszenie where kat_id = " + req.query.cat;
+      connection.query(dBquery, function(err, rows, fields) {
+        if (err) {
+          console.log('sql error (empty query or something)');
+          res.render('pages/search', {entriesEJ: [], categories: res0});
+        } else {
+          res.render('pages/search', {entriesEJ: rows, categories: res0}); //TODO: jak dojdzie więcej parametrów to zagnieździć w pizdu
+        }
+        connection.release(); //najważniejsza linia w całym kodzie
+      });
+
     });
   });
 });
