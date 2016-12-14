@@ -11,8 +11,8 @@ var mysql       = require('mysql');
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
-    user     : 'root',
-    password : 'root',
+    user     : 'uczen',
+    password : 'qwerty',
     database : 'OGLOSZENIOWA',
     debug    :  false
 });
@@ -55,7 +55,20 @@ app.post('/RegIn', function(req, res){
   var regInH1 = req.body.haslo;
   var regInH2 = req.body.hasloAgain;
   pool.getConnection(function(err,connection) {
-    console.log('connected as id ' + connection.threadId);
+    //console.log('connected as id ' + connection.threadId);
+    console.log('connected as id '+ connection.threadId);
+    var dBquery = "INSERT INTO uzytkownicy VALUES("
+                + regInM + ","
+                + regInI + ","
+                + regInN + ","
+                + regInNick + ","
+                + regInH1 + ","
+                + "2016-12-13" + ","
+                + 5 + ","
+                + 0 + ","
+                +")";
+    connection.query(dBquery);
+
 
   });
   res.send("e-mail: " + regInM + " imie: "+ regInI);
@@ -65,6 +78,7 @@ app.post('/RegIn', function(req, res){
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
+
     getCategories(connection,function(res0){
       var dBquery="";
       if (req.query.q)
@@ -80,6 +94,7 @@ app.get('/search', function(req,res) {
         }
         connection.release(); //najważniejsza linia w całym kodzie
       });
+
     });
   });
 });
