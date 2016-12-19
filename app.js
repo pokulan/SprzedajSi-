@@ -51,14 +51,14 @@ app.post('/RegIn', function(req, res){
   pool.getConnection(function(err,connection) {
     //console.log('connected as id ' + connection.threadId);
     console.log('connected as id '+ connection.threadId);
-    var dBquery = "INSERT INTO uzytkownicy (id, mail, imie, nazwisko, nick, haslo, datarej, punkty, ogloszenia) VALUES (6, '"
+    var dBquery = "INSERT INTO uzytkownicy (mail, imie, nazwisko, nick, haslo, datarej, punkty, ogloszenia) VALUES ('"
                 + req.body.mail + "','"
                 + req.body.imie + "','"
                 + req.body.nazwisko + "','"
                 + req.body.nick + "','"
                 + req.body.haslo + "',"
                 + "CURDATE()"+ ","
-                + 5 + ","
+                + 0 + ","
                 + 0 +")";
     connection.query(dBquery, function(err, rows2, fields) {
       if (err) {
@@ -68,7 +68,7 @@ app.post('/RegIn', function(req, res){
       }
     });
   });
-  res.send("e-mail: " + " imie: ");
+  res.redirect('/login/');
   //express.static('home_page')
 })
 
