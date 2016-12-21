@@ -51,9 +51,8 @@ app.use('/login', function(req,res){
 });
 
 
-app.post('/logIn', function(req, res){
-  var logInM = req.body.mail;
-  var logInH = req.body.haslo;
+app.post('/LogInIN', function(req, res){
+  console.log('test log ');
 
   pool.getConnection(function(err,connection) {
 
@@ -73,7 +72,7 @@ app.post('/logIn', function(req, res){
 
         res.redirect('/');
       } else{           // ZŁE HASLO LOGOWANIE
-
+        console.log("Zle haslo");
         res.redirect('/login/');
       }
       if (err) {
@@ -87,7 +86,7 @@ app.post('/logIn', function(req, res){
 
 
   //express.static('home_page')
-})
+});
 
 app.post('/RegIn', function(req, res){
   pool.getConnection(function(err,connection) {
@@ -113,7 +112,7 @@ app.post('/RegIn', function(req, res){
   });
   res.redirect('/login/');
   //express.static('home_page')
-})
+});
 
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
