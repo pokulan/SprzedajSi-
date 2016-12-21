@@ -2,7 +2,9 @@ var bodyParser  = require('body-parser');
 var express     = require('express');
 var ejs         = require('ejs');
 var fs          = require('fs');
-var app = express();
+var cookie      = require('cookie');
+var app         = express();
+
 
 app.set('view engine', 'ejs');
 
@@ -16,7 +18,6 @@ var pool      =    mysql.createPool({
     database : 'OGLOSZENIOWA',
     debug    :  false
 });
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -48,11 +49,23 @@ app.post('/logIn', function(req, res){
 
     console.log('connected as id '+ connection.threadId);
 
-    var dBquery = "SELECT haslo FROM uzytkownicy WHERE mail =" + req.body.mail
+    var dBquery = "SELECT haslo FROM uzytkownicy WHERE mail ='" + req.body.mail +"'";
 
     connection.query(dBquery, function(err, rows, fields) {
-      var query = JSON.parse(rows);
+      //var query = JSON.parse(rows2);
+      console.log(rows[0].haslo);
+      if(req.body.haslo == rows[0].haslo){
+        console.log("Dobre haslo");        // DOBRE HASLO LOGOWANIE
+        res.setHeader('Set-Cookie', cookie.serialize('user', 'zalogowano', {
+            httpOnly: true,
+            maxAge: 60 * 60 * 24 * 2 // 2 DNI
+        }));
 
+        res.redirect('/');
+      } else{           // ZŁE HASLO LOGOWANIE
+
+        res.redirect('/login/');
+      }
       if (err) {
         throw err;
       } else {
@@ -62,7 +75,7 @@ app.post('/logIn', function(req, res){
     });
   });
 
-  res.redirect('/');
+
   //express.static('home_page')
 })
 
