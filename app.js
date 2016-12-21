@@ -25,20 +25,30 @@ app.use(bodyParser.urlencoded({
 }));
 
 function getCategories(connection,callback) {
-  //pool.getConnection(function(err,connection) {
-    dBquery = "select * from kategoria"
-    connection.query(dBquery, function(err, rows2, fields) {
-      if (err) {
-        throw err;
-      } else {
-        return callback(rows2);
-      }
-    });
-  //});
+  dBquery = "select * from kategoria"
+  connection.query(dBquery, function(err, rows2, fields) {
+    if (err) {
+      throw err;
+    } else {
+      return callback(rows2);
+    }
+  });
 }//TODO: tutaj reguła 1000 ifów albo 1000 caseów i nowy parametr
 
-app.use('/', express.static('home_page'));
-app.use('/login', express.static('login_page'));
+app.use('/rsrc', express.static('rsrc'));
+
+app.get('/', function(req,res) {
+  pool.getConnection(function(err,connection) {
+    getCategories(connection, function(res0) {
+      res.render('pages/main', {categories: res0});
+      connection.release();
+    });
+  });
+});
+
+app.use('/login', function(req,res){
+  res.render('pages/signin');
+});
 
 
 app.post('/logIn', function(req, res){
@@ -108,7 +118,6 @@ app.post('/RegIn', function(req, res){
 app.get('/search', function(req,res) {
   pool.getConnection(function(err,connection) {
     console.log('connected as id ' + connection.threadId);
-
     getCategories(connection,function(res0){
       var dBquery="";
       if (req.query.q)
@@ -124,7 +133,6 @@ app.get('/search', function(req,res) {
         }
         connection.release(); //najważniejsza linia w całym kodzie
       });
-
     });
   });
 });
