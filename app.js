@@ -51,7 +51,26 @@ app.use('/login', express.static('login_page'));
 app.post('/logIn', function(req, res){
   var logInM = req.body.mail;
   var logInH = req.body.haslo;
-  res.send("e-mail: " + logInM + " hasło: "+ logInH);
+
+  pool.getConnection(function(err,connection) {
+
+    console.log('connected as id '+ connection.threadId);
+
+    var dBquery = "SELECT haslo FROM uzytkownicy WHERE mail =" + req.body.mail
+
+    connection.query(dBquery, function(err, rows, fields) {
+      var query = JSON.parse(rows);
+
+      if (err) {
+        throw err;
+      } else {
+        console.log("put");
+      }
+      connection.release();
+    });
+  });
+
+  res.redirect('/');
   //express.static('home_page')
 })
 
@@ -74,6 +93,7 @@ app.post('/RegIn', function(req, res){
       } else {
         console.log("put");
       }
+      connection.release();
     });
   });
   res.redirect('/login/');
