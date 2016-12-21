@@ -35,7 +35,17 @@ body{
 	margin-right: auto;
 	padding: 1%;
 }
-
+#action_bar2{
+	background-color: #e0d8c0;
+	text-align: center;
+	position: relative;
+	width: 400px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
 .search_label{
 	margin-left: 10%;
 	margin-right: 10%;
@@ -75,4 +85,102 @@ footer{
 	width: 100%;
 	height: 25px;
 	line-height: 25px;
+
+	z-index: 5;
+}
+#box{
+	background-color: #e0d8c0;
+	position: relative;
+	width: auto;
+	height: auto;
+
+}
+#info{
+	background-color: #e0d8c0;
+	position: relative;
+	width: 400px;
+	height: auto;
+	padding: 8px;
+}
+#tak{
+	background-color: #ede5ce;
+	display: -webkit-box;
+    display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 80%;
+	padding-bottom: 10px;
+}
+#loginReg{
+	display: flex;
+	justify-content: center;
+}
+#base{
+  margin-top: 10%;
+  list-style: none;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 100px;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  justify-content: center;
+}
+
+.logButt{
+	background-color: #c4bba1;
+	width: 50%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	cursor: pointer;
+}
+.logButt:hover{
+	background-color: #b9c4a1;
+}
+
+.wsk{
+	width: 50%;
+	height: 6px;
+	background-color: #88ceae
+}
+#wskLog{
+	opacity: 1;
+}
+#wskReg{
+	opacity: 0;
+}
+#wskaznik{
+		background-color: #cdd6ba;
+		display: flex;
+		justify-content: center;
+}
+
+::-webkit-input-placeholder {
+   color: red;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: red;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: red;
+}
+
+:-ms-input-placeholder {
+   color: red;
+}
+#container{
+	height: calc(100vh - 50px);
+
 }

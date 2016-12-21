@@ -45,7 +45,9 @@ app.get('/', function(req,res) {
   });
 });
 
-app.use('/login', express.static('login_page'));
+app.use('/login', function(req,res){
+  res.render('pages/signin');
+});
 
 
 app.post('/logIn', function(req, res){
