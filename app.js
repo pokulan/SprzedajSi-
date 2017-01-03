@@ -78,7 +78,7 @@ app.post('/LogInIN', function(req, res){
       if (err) {
         throw err;
       } else {
-        console.log("put");
+        console.log("ksz ksz");
       }
       connection.release();
     });
@@ -105,7 +105,7 @@ app.post('/RegIn', function(req, res){
       if (err) {
         throw err;
       } else {
-        console.log("put");
+        console.log("ksz ksz");
       }
       connection.release();
     });
